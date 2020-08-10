@@ -5,7 +5,7 @@
 const LoginContainer = () => import("@/components/containers/login");
 
 export default {
-  layout: 'login-layout',
+  layout: 'login',
   components: {
     LoginContainer
   }

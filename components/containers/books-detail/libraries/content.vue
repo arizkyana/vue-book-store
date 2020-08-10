@@ -104,11 +104,7 @@ export default {
         disabled: false,
         href: "/"
       },
-      {
-        text: "Books title",
-        disabled: true,
-        href: "#"
-      }
+      
     ],
     detail: {}
   }),
@@ -117,16 +113,15 @@ export default {
     const {id} = this.$route.query;
     this.loading = true;
     try {
-      const data = await this.$axios({
-        url: `/browse/book/${id}/detail`,
-        method: 'get',
-        auth: {
-          username: 'client-web-id',
-          password: 'client-web-secret'
-        }
-      })
+      const data = await this.$useRepositoryCheckout.addToCart(id);
 
       this.detail = data.data;
+
+      this.breadcrumbs.push({
+        text: this.detail.title,
+        disabled: true,
+        href: "#"
+      });
 
     } catch (error) {
       

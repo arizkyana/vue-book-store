@@ -5,17 +5,15 @@
         <v-flex>
           <v-layout justify-end align-center>
             <v-flex shrink class="mr-3 hover">
-              <nuxt-link :to="routing.browse" class="nav-item">Browse</nuxt-link>
+              <nuxt-link :to="$useRouting.browse" class="nav-item">Browse</nuxt-link>
             </v-flex>
 
             <v-flex shrink class="mr-3">
-              <nuxt-link :to="routing.account" class="nav-item">Account</nuxt-link>
+              <nuxt-link :to="$useRouting.account" class="nav-item">Account</nuxt-link>
             </v-flex>
             <v-flex shrink class="hover">
-              <nuxt-link :to="routing.books" class="nav-item">
-                <v-badge :content="cartCount">
-                  <span>Cart</span>
-                </v-badge>
+              <nuxt-link :to="$useRouting.checkout" class="nav-item">
+                <Cart />
               </nuxt-link>
             </v-flex>
           </v-layout>
@@ -25,43 +23,21 @@
   </nav>
 </template>
 <script>
-import routing from "@/constant/routing";
+
+
+const Cart = () => import('./cart');
 
 export default {
   name: "shared-navbar",
 
+  components: {
+    Cart
+  },
+
   data: () => ({
-    routing,
     cartCount: 0
   }),
 
-  created() {
-    this.$root.$on('add-cart', () => {
-      this.loadCart();
-    })
-  },
-
-  async mounted() {
-    this.loadCart();
-
-    
-  },
-
-  methods: {
-    async loadCart() {
-      try {
-        const data = await this.$axios({
-          url: '/checkout/cart',
-          method: 'get'
-        })
-
-        this.cartCount = data.data.length;
-
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  }
 };
 </script>
 <style lang="scss" scoped>

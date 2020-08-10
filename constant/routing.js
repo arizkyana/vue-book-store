@@ -1,6 +1,6 @@
 export default {
   browse: '/',
-  books: '/books',
+  checkout: '/checkout',
   booksDetail: (id) => `/books-detail?id=${id}`,
   account: '/account'
 }
